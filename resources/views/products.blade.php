@@ -1,0 +1,1 @@
+<h1>Daftar Produk: {{ $title }}</h1>
