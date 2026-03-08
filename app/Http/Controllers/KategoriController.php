@@ -15,9 +15,9 @@ class KategoriController extends Controller {
         $page = (object) [
             'title' => 'Daftar kategori yang terdaftar dalam sistem'
         ];
-        $activeMenu = 'kategori'; // set menu yang sedang aktif [cite: 1666]
+        $activeMenu = 'kategori'; // set menu yang sedang aktif
         
-        $kategori = KategoriModel::all(); // ambil data untuk filter dropdown [cite: 1668]
+        $kategori = KategoriModel::all(); // ambil data untuk filter dropdown
         
         return view('kategori.index', compact('breadcrumb', 'page', 'activeMenu', 'kategori'));
     }
@@ -26,13 +26,13 @@ class KategoriController extends Controller {
     public function list(Request $request) {
         $kategoris = KategoriModel::select('kategori_id', 'kategori_kode', 'kategori_nama');
         
-        // Filter data berdasarkan kategori_id [cite: 1773]
+        // Filter data berdasarkan kategori_id
         if ($request->kategori_id) {
             $kategoris->where('kategori_id', $request->kategori_id);
         }
 
         return DataTables::of($kategoris)
-            ->addIndexColumn() // menambahkan kolom index/no urut [cite: 1776]
+            ->addIndexColumn() // menambahkan kolom index/no urut
             ->addColumn('aksi', function ($kategori) {
                 $btn  = '<a href="'.url('/kategori/' . $kategori->kategori_id).'" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<a href="'.url('/kategori/' . $kategori->kategori_id . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
@@ -41,7 +41,7 @@ class KategoriController extends Controller {
                             '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html [cite: 1784]
+            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
 
